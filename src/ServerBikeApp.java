@@ -21,11 +21,12 @@ public class ServerBikeApp {
                     new PrintWriter(switchClientSocket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(switchClientSocket.getInputStream()));
+            BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
 
         ){
             BikeProtocol bikeProtocol = new BikeProtocol();
             while (in.readLine() != null) {
-                out.println(bikeProtocol.processAlertSignal());
+                out.println(bikeProtocol.processAlertSignal(stdIn));
             }
         } catch (IOException e) {
             System.out.println("Exception caught when trying to listen on port "
