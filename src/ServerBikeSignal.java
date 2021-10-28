@@ -5,7 +5,7 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class ServerBikeApp {
+public class ServerBikeSignal {
 
     public static void main(String[] args) {
         if(args.length != 1) {
