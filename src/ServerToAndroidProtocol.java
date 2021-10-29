@@ -42,7 +42,7 @@ public class ServerToAndroidProtocol {
     }
 
     public String sendDummySignal() {
-        return System.currentTimeMillis() + "";
+        return "0.0";
     }
 
     public void closeSocketConnection() {

@@ -17,12 +17,13 @@ public class ServerBikeSignal {
         // for a SwitchBikeSignal client to make connection
         int portNumber = Integer.parseInt(args[0]);
 
-        System.out.println("Connecting to the android app...");
+        //System.out.println("Connecting to the android app...");
         ServerToAndroidProtocol s2aProtocol = new ServerToAndroidProtocol();
         //ServerToAndroidProtocol s2aProtocol = new ServerToAndroidProtocol(SrvUtil.ANDROID_IP, SrvUtil.ANDROID_PORT_NUMBER);
         if (s2aProtocol != null) {
-            System.out.println("Connected.");
-            System.out.println("Listening.");
+            //System.out.println("Connected.");
+            System.out.println("Not Connected to Android app.");
+            System.out.println("Listening for Switch Client Connection...");
             try(ServerSocket serverSocket =
                         new ServerSocket(portNumber);
                 Socket switchClientSocket = serverSocket.accept();
