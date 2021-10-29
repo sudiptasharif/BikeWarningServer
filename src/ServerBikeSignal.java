@@ -22,6 +22,7 @@ public class ServerBikeSignal {
         //ServerToAndroidProtocol s2aProtocol = new ServerToAndroidProtocol(SrvUtil.ANDROID_IP, SrvUtil.ANDROID_PORT_NUMBER);
         if (s2aProtocol != null) {
             System.out.println("Connected.");
+            System.out.println("Listening.");
             try(ServerSocket serverSocket =
                         new ServerSocket(portNumber);
                 Socket switchClientSocket = serverSocket.accept();
