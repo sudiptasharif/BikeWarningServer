@@ -12,26 +12,38 @@ public class ServerBikeSignal {
             System.err.println(SrvUtil.INVALID_APP_USAGE);
             System.exit(1);
         }
+        System.out.println("\nServer Bike Signal App\n");
+        // ServerBikeSignal will listen to this port number
+        // for a SwitchBikeSignal client to make connection
         int portNumber = Integer.parseInt(args[0]);
 
-        try(ServerSocket serverSocket =
-                new ServerSocket(portNumber);
-            Socket switchClientSocket = serverSocket.accept();
-            PrintWriter out =
-                    new PrintWriter(switchClientSocket.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(switchClientSocket.getInputStream()));
-            BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
-
-        ){
-            BikeProtocol bikeProtocol = new BikeProtocol();
-            while (in.readLine() != null) {
-                out.println(bikeProtocol.processAlertSignal(stdIn));
+        System.out.println("Connecting to the android app...");
+        ServerToAndroidProtocol s2aProtocol = new ServerToAndroidProtocol();
+        //ServerToAndroidProtocol s2aProtocol = new ServerToAndroidProtocol(SrvUtil.ANDROID_IP, SrvUtil.ANDROID_PORT_NUMBER);
+        if (s2aProtocol != null) {
+            System.out.println("Connected.");
+            try(ServerSocket serverSocket =
+                        new ServerSocket(portNumber);
+                Socket switchClientSocket = serverSocket.accept();
+                PrintWriter out =
+                        new PrintWriter(switchClientSocket.getOutputStream(), true);
+                BufferedReader in = new BufferedReader(
+                        new InputStreamReader(switchClientSocket.getInputStream()));
+            ){
+                while (in.readLine() != null) {
+                    // out.println will send the response from the android app back to the switch client
+                    //out.println(s2aProtocol.sendAlertSignalToAndorid());
+                    out.println(s2aProtocol.sendDummySignal());
+                }
+                s2aProtocol.closeSocketConnection();
+            } catch (IOException e) {
+                System.out.println("Exception caught when trying to listen on port "
+                        + portNumber + " or listening for a connection");
+                System.out.println(e.getMessage());
             }
-        } catch (IOException e) {
-            System.out.println("Exception caught when trying to listen on port "
-                    + portNumber + " or listening for a connection");
-            System.out.println(e.getMessage());
+        } else {
+            System.out.println("Unable to Connect");
+            System.exit(1);
         }
     }
 }
