@@ -17,12 +17,12 @@ public class ServerBikeSignal {
         // for a SwitchBikeSignal client to make connection
         int portNumber = Integer.parseInt(args[0]);
 
-        //System.out.println("Connecting to the android app...");
-        ServerToAndroidProtocol s2aProtocol = new ServerToAndroidProtocol();
-        //ServerToAndroidProtocol s2aProtocol = new ServerToAndroidProtocol(SrvUtil.ANDROID_IP, SrvUtil.ANDROID_PORT_NUMBER);
+        System.out.println("Connecting to the android app...");
+        // ServerToAndroidProtocol s2aProtocol = new ServerToAndroidProtocol();
+        ServerToAndroidProtocol s2aProtocol = new ServerToAndroidProtocol(SrvUtil.ANDROID_IP, SrvUtil.ANDROID_PORT_NUMBER);
         if (s2aProtocol != null) {
-            //System.out.println("Connected.");
-            System.out.println("Not Connected to Android app.");
+            System.out.println("Connected.");
+            //System.out.println("Not Connected to Android app.");
             System.out.println("Listening for Switch Client Connection...");
             try(ServerSocket serverSocket =
                         new ServerSocket(portNumber);
@@ -37,12 +37,13 @@ public class ServerBikeSignal {
                     //out.println(s2aProtocol.sendAlertSignalToAndorid());
                     out.println(s2aProtocol.sendDummySignal());
                 }
-                s2aProtocol.closeSocketConnection();
+                //s2aProtocol.closeSocketConnection();
             } catch (IOException e) {
                 System.out.println("Exception caught when trying to listen on port "
                         + portNumber + " or listening for a connection");
                 System.out.println(e.getMessage());
             }
+            System.out.println("Closing ServerBikeSignal Signal Server.");
         } else {
             System.out.println("Unable to Connect");
             System.exit(1);
