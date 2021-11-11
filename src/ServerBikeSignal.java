@@ -1,3 +1,5 @@
+import org.w3c.dom.ls.LSOutput;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,11 +19,11 @@ public class ServerBikeSignal {
         // for a SwitchBikeSignal client to make connection
         int portNumber = Integer.parseInt(args[0]);
 
-        System.out.println("Connecting to the android app...");
+        // System.out.println("Connecting to the android app...");
         // ServerToAndroidProtocol s2aProtocol = new ServerToAndroidProtocol();
-        ServerToAndroidProtocol s2aProtocol = new ServerToAndroidProtocol(SrvUtil.ANDROID_IP, SrvUtil.ANDROID_PORT_NUMBER);
-        if (s2aProtocol != null) {
-            System.out.println("Connected.");
+        //ServerToAndroidProtocol s2aProtocol = new ServerToAndroidProtocol(SrvUtil.ANDROID_IP, SrvUtil.ANDROID_PORT_NUMBER);
+        if (true/*s2aProtocol != null*/) {
+            // System.out.println("Connected.");
             //System.out.println("Not Connected to Android app.");
             System.out.println("Listening for Switch Client Connection...");
             try(ServerSocket serverSocket =
@@ -32,10 +34,11 @@ public class ServerBikeSignal {
                 BufferedReader in = new BufferedReader(
                         new InputStreamReader(switchClientSocket.getInputStream()));
             ){
+                System.out.println("Connected to a client");
                 while (in.readLine() != null) {
                     // out.println will send the response from the android app back to the switch client
                     //out.println(s2aProtocol.sendAlertSignalToAndorid());
-                    out.println(s2aProtocol.sendDummySignal());
+                    out.println(System.currentTimeMillis());
                 }
                 //s2aProtocol.closeSocketConnection();
             } catch (IOException e) {
